@@ -27,23 +27,19 @@ public class FileWriter {
         return new BufferedWriter(fw);
     }
     
-    public void writeFileCharacters(File file, List<String[]> characters) throws IOException{
-        
-        for(int i =0; i < characters.size(); i++){
-            String out = "";
-            for(String character : characters.get(i)){
-                out = out + character;
-            }
-            this.writeLine(file, out+"\n");
+    public void writeFileLines(File file, List<String> lines) throws IOException{ 
+       
+        for(String line: lines){
+            this.writeLine(file, line);
         }
     }
     
-    public void writeFileCharacters(String fileName, List<String[]> characters) throws IOException{
-        this.writeFileCharacters(new File(fileName), characters);
+    public void writeFileLines(String fileName, List<String> characters) throws IOException{
+        this.writeFileLines(new File(fileName), characters);
     }
     
     public void writeLine(File file, String line) throws IOException{
-        
+        System.out.println("Writing Line : "+ line);
         BufferedWriter bw = getBufferedWriter(file);
         bw.write(line);
         bw.close();

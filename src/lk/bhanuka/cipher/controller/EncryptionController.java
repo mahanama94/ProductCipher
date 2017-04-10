@@ -21,11 +21,13 @@ public class EncryptionController {
     
     private static Decryptor decryptor= new Decryptor();
      
-    public static void Encrypt(EncryptionRequest request){
-        System.out.println("Encryption Request Recieved");
+    public static void Encrypt(EncryptionRequest request) throws IOException{
+        System.out.println("file Name : "+ request.inputFile.getName());
+        EncryptionController.encryptor.encrypt(request);
     }
     
-    public static void decrypt(DecryptionRequest request){
+    public static void decrypt(DecryptionRequest request) throws IOException{
+        EncryptionController.decryptor.decrypt(request);
         System.out.println("Decryption request recieved");
     }
 }

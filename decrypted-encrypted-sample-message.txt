@@ -1,0 +1,1 @@
+This is a sample message containing confidential information to some user. Here the message contained in the file will be encrypted using product cipher and again decrypted to obtain the same message back.

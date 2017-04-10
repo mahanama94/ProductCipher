@@ -5,14 +5,36 @@
  */
 package lk.bhanuka.cipher.core;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author bhanuka
  */
 public class Decryptor {
 
+    private FileWriter fileWriter = new FileWriter();
     
-    public String descrypt(String cipher){
+    private FileReader fileReader = new FileReader();
+    
+    public void decrypt(DecryptionRequest request) throws IOException{
+        
+        List<String> lines = this.fileReader.readFileLines(request.inputFile);
+  
+        List<String> decrypted = new ArrayList();
+        
+        for(String line : lines){
+  
+            decrypted.add(this.decrypt(line));
+        }
+        
+        this.fileWriter.writeFileLines("decrypted-"+ request.inputFile.getName(), decrypted);
+
+    }
+    
+    private String decrypt(String cipher){
        
         return this.desubstitute(this.depermute(cipher));
         

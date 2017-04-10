@@ -5,13 +5,38 @@
  */
 package lk.bhanuka.cipher.core;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author bhanuka
  */
 public class Encryptor {
 
-    public String encrypt(String text){
+    private FileWriter fileWriter = new FileWriter();
+    
+    private FileReader fileReader = new FileReader();
+    
+    public void encrypt(EncryptionRequest request) throws IOException{
+        
+        List<String> lines = this.fileReader.readFileLines(request.inputFile);
+  
+        List<String> encrypted = new ArrayList();
+        
+        for(String line : lines){
+            
+            System.out.println("Encryting line : "+ line);
+  
+            encrypted.add(this.encrypt(line));
+        }
+        
+        this.fileWriter.writeFileLines("encrypted-"+request.inputFile.getName(), encrypted);
+  
+    }
+    
+    private String encrypt(String text){
         return this.permute(this.substitute(text));
     }
     

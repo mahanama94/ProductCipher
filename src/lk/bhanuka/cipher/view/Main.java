@@ -5,6 +5,9 @@
  */
 package lk.bhanuka.cipher.view;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import lk.bhanuka.cipher.controller.EncryptionController;
@@ -35,6 +38,15 @@ public class Main extends javax.swing.JFrame {
         request.inputFile = this.fileChooser.getSelectedFile();
         
         return request;
+    }
+    
+    public DecryptionRequest generateDecryptionRequest(){
+        DecryptionRequest request = new DecryptionRequest();
+        
+        request.inputFile = this.fileChooser.getSelectedFile();
+        
+        return request;
+        
     }
 
     /**
@@ -109,9 +121,9 @@ public class Main extends javax.swing.JFrame {
                             .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnCancel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(66, 66, 66)
+                        .addGap(60, 60, 60)
                         .addComponent(btnDecrypt)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnEncrypt)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -149,7 +161,11 @@ public class Main extends javax.swing.JFrame {
         }
         else{
             
-           EncryptionController.Encrypt(this.generateEncryptionRequest());
+            try {
+                EncryptionController.Encrypt(this.generateEncryptionRequest());
+            } catch (IOException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
         }
     }//GEN-LAST:event_btnEncryptActionPerformed
@@ -170,7 +186,18 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnDecryptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDecryptActionPerformed
-        EncryptionController.decrypt(new DecryptionRequest());
+        if(this.fileChooser.getSelectedFile() == null){
+            JOptionPane.showMessageDialog(this, "No file chosen");
+        }
+        else{
+            
+            try {
+                EncryptionController.decrypt(this.generateDecryptionRequest());
+            } catch (IOException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
     }//GEN-LAST:event_btnDecryptActionPerformed
 
 
